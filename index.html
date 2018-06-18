@@ -13,11 +13,11 @@
         padding: 0;
       }
       .container {
-        height: 95vh;
-        width: 99%;
-        margin: 2px auto;
-        border: 2px solid red;
-        box-shadow: 0 0 2px red;
+        height: 99vh;
+        width: 100%;
+        margin: 0px auto;
+        border: 0px solid red;
+        box-shadow: 0 0 0px red;
       }
       .fullscreen {
         background-color: #333;
@@ -29,7 +29,7 @@
         position: absolute;
         text-align: center;
         width: 100%;
-        padding-top: 1px;
+        padding-top: 0px;
         font-size: 20px;
       }
       .examples a {
@@ -84,48 +84,48 @@
         };
       }
 
-//      $('#container').FlipBook({
-//        pageCallback: theKingIsBlackPageCallback,
-//        pages: 40,
-//        propertiesCallback: function(props) {
-//          props.page.depth /= 3;
-//          props.cssLayersLoader = function(n, clb) {// n - page number
-//            clb([{
-//              css: '.hd {margin-top: 2px;background-color: red;}',
-//              html: '',
-//              js: function (jContainer) {
-//                console.log(jContainer);
-//                return {
-//                  hide: function() {console.log('hide');},
-//                  hidden: function() {console.log('hidden');},
-//                  show: function() {console.log('show');},
-//                  shown: function() {console.log('shown');},
-//                  dispose: function() {console.log('dispose');}
-//                };
-//              }
-//            }]);
-//          };
-//          props.cover.color = 0x000000;
-//          return props;
-//        },
-//        template: {
-//          html: 'templates/default-book-view.html',
-//          styles: [
-//            'css/short-white-book-view.css'
-//          ],
-//          links: [
-//            {
-//              rel: 'stylesheet',
-//              href: 'css/font-awesome.min.css'
-//            }
-//          ],
-//          script: 'js/default-book-view.js',
-//          sounds: {
-//            startFlip: 'sounds/start-flip.mp3',
-//            endFlip: 'sounds/end-flip.mp3'
-//          }
-//        }
-//      });
+     $('#container').FlipBook({
+       pageCallback: theKingIsBlackPageCallback,
+       pages: 40,
+       propertiesCallback: function(props) {
+         props.page.depth /= 3;
+         props.cssLayersLoader = function(n, clb) {// n - page number
+           clb([{
+             css: '.hd {margin-top: 2px;background-color: red;}',
+             html: '',
+             js: function (jContainer) {
+               console.log(jContainer);
+               return {
+                 hide: function() {console.log('hide');},
+                 hidden: function() {console.log('hidden');},
+                 show: function() {console.log('show');},
+                 shown: function() {console.log('shown');},
+                 dispose: function() {console.log('dispose');}
+               };
+             }
+           }]);
+         };
+         props.cover.color = 0x000000;
+         return props;
+       },
+       template: {
+         html: 'templates/default-book-view.html',
+         styles: [
+           'css/short-black-book-view.css'
+         ],
+         links: [
+           {
+             rel: 'stylesheet',
+             href: 'css/font-awesome.min.css'
+           }
+         ],
+         script: 'js/default-book-view.js',
+         sounds: {
+           startFlip: 'sounds/start-flip.mp3',
+           endFlip: 'sounds/end-flip.mp3'
+         }
+       }
+     });
       // }
 
       // // Sample 2 {
@@ -149,27 +149,27 @@
       // // }
 
        // Sample 3 {
-       $('#container').FlipBook({
-         pdf: 'books/pdf/TheThreeMusketeers.pdf',
-         propertiesCallback: function(props) {
-           props.page.depth /= 2.5;
-           props.cover.padding = 0.002;
-           return props;
-         },
-         template: {
-           html: 'templates/default-book-view.html',
-           styles: [
-             'css/short-black-book-view.css'
-           ],
-           links: [
-             {
-               rel: 'stylesheet',
-               href: 'css/font-awesome.min.css'
-             }
-           ],
-           script: 'js/default-book-view.js'
-         }
-       });
+      //  $('#container').FlipBook({
+      //    pdf: 'books/pdf/TheThreeMusketeers.pdf',
+      //    propertiesCallback: function(props) {
+      //      props.page.depth /= 2.5;
+      //      props.cover.padding = 0.002;
+      //      return props;
+      //    },
+      //    template: {
+      //      html: 'templates/default-book-view.html',
+      //      styles: [
+      //        'css/short-black-book-view.css'
+      //      ],
+      //      links: [
+      //        {
+      //          rel: 'stylesheet',
+      //          href: 'css/font-awesome.min.css'
+      //        }
+      //      ],
+      //      script: 'js/default-book-view.js'
+      //    }
+      //  });
        // }
 
       // // Sample 4 {

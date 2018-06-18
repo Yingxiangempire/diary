@@ -13,7 +13,7 @@
 
 .flip-book .view .prev, .flip-book .view .next {
   position: absolute;
-  top: 50%;
+  top: 100%;
   transform: translate(0, -50%);
   z-index: 1;
 }
