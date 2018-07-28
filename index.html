@@ -257,6 +257,7 @@ function loadApp() {
 
 			missing: function (e, pages) {
                 var uid=GetUrlPara();
+				alert(uid);
 				for (var i = 0; i < pages.length; i++) {
 					addPage(pages[i], $(this),uid);
 				}
