@@ -26,11 +26,7 @@
 <script type="text/javascript">
 function loadApp() {
 	var flipbook = $('.sj-book');
-
-
-
 	// Mousewheel
-alert('pp');
 	$('#book-zoom').mousewheel(function(event, delta, deltaX, deltaY) {
 		var data = $(this).data(),
 			step = 30,
@@ -55,7 +51,7 @@ alert('pp');
 
 		if (data.scrollTimer)
 			clearInterval(data.scrollTimer);
-		
+
 		data.scrollTimer = setTimeout(function(){
 			data.scrollX = undefined;
 			data.scrollPage = undefined;
@@ -65,7 +61,6 @@ alert('pp');
 	});
 
 	// Slider
-	alert('ss');
 
 	$( "#slider" ).slider({
 		min: 1,
@@ -94,7 +89,7 @@ alert('pp');
 
 			if (window._thumbPreview)
 				_thumbPreview.removeClass('show');
-			
+
 			$('.sj-book').turn('page', Math.max(1, $(this).slider('value')*2 - 2));
 
 		}
@@ -102,8 +97,6 @@ alert('pp');
 
 
 	// URIs
-	alert('ww');
-
 	Hash.on('^page\/([0-9]*)$', {
 		yep: function(path, parts) {
 
@@ -135,7 +128,7 @@ alert('pp');
 
 			break;
 			case next:
-				
+
 				$('.sj-book').turn('next');
 
 			break;
@@ -145,12 +138,7 @@ alert('pp');
 
 
 	// Flipbook
-	alert('ii');
-
 	flipbook.bind(($.isTouch) ? 'touchend' : 'click', zoomHandle);
-	alert('qq');
-
-alert($(window).height());
 	flipbook.turn({
 		elevation: 50,
 		acceleration: !isChrome(),
@@ -158,17 +146,17 @@ alert($(window).height());
 		gradients: true,
 		duration: 1000,
 		pages: 112,
-		height: $(window).height(),
+		height: $(window).height()-20,
 		display:'single',
 		when: {
 			turning: function(e, page, view) {
-				
+
 				var book = $(this),
 					currentPage = book.turn('page'),
 					pages = book.turn('pages');
 
 				if (currentPage>3 && currentPage<pages-3) {
-				
+
 					if (page==1) {
 						book.turn('page', 2).turn('stop').turn('page', page);
 						e.preventDefault();
@@ -191,7 +179,7 @@ alert($(window).height());
 				}
 
 				updateDepth(book, page);
-				
+
 				if (page>=2)
 					$('.sj-book .p2').addClass('fixed');
 				else
@@ -203,7 +191,7 @@ alert($(window).height());
 					$('.sj-book .p111').removeClass('fixed');
 
 				Hash.go('page/'+page).update();
-					
+
 			},
 
 			turned: function(e, page, view) {
@@ -215,7 +203,7 @@ alert($(window).height());
 				}
 
 				updateDepth(book);
-				
+
 				$('#slider').slider('value', getViewNumber(book, page));
 
 				book.turn('center');
@@ -228,13 +216,13 @@ alert($(window).height());
 			},
 
 			end: function(e, pageObj) {
-			
+
 				var book = $(this);
 
 				updateDepth(book);
 
 				setTimeout(function() {
-					
+
 					$('#slider').slider('value', getViewNumber(book));
 
 				}, 1);
