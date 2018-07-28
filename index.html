@@ -30,6 +30,7 @@ function loadApp() {
 	// Check if the CSS was already loaded
 	
 	if (flipbook.width()==0 || flipbook.height()==0) {
+		alert('ss');
 		setTimeout(loadApp, 10);
 		return;
 	}
@@ -37,7 +38,6 @@ function loadApp() {
 	// Mousewheel
 
 	$('#book-zoom').mousewheel(function(event, delta, deltaX, deltaY) {
-		alert('ss');
 
 		var data = $(this).data(),
 			step = 30,
