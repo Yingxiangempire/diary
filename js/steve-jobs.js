@@ -48,7 +48,7 @@ function addPage(page, book,uid) {
 
 		var element = $('<div />',
 			{'class': 'own-size',
-				css: {width: 460, height: 600}
+				css: {width: 460, height: 20}
 			}).
 			html('<div class="loader"></div>');
 
@@ -204,7 +204,7 @@ function setPreview(view) {
 	_thumbPreview.
 		addClass('no-transition').
 		css({width: width + 15,
-			height: previewHeight + 15,
+			height: previewHeight + 115,
 			top: -previewHeight - 30,
 			left: ($($('#slider').children(':first')).width() - width - 15)/2
 		});

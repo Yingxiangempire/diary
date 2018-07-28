@@ -23,7 +23,7 @@ body, ul, table, form{
 
 #canvas{
 	width: 100%;
-	height: 700px;
+	height: 100%;
 	margin: 10px auto;
 }
 
@@ -37,7 +37,7 @@ body, ul, table, form{
 
 .sj-book{
 	width:100%;
-	height:700px;
+	height:90%;
 }
 
 .sj-book h1{
