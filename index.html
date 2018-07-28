@@ -153,14 +153,7 @@ function loadApp() {
 	// Flipbook
 
 	flipbook.bind(($.isTouch) ? 'touchend' : 'click', zoomHandle);
-	function GetUrlPara()
-	{
-		var url = document.location.toString();
-		var arrUrl = url.split("?");
 
-		var para = arrUrl[1];
-		return para;
-	}
 
 	flipbook.turn({
 		elevation: 50,
@@ -256,8 +249,8 @@ function loadApp() {
 			},
 
 			missing: function (e, pages) {
-                var uid=GetUrlPara();
 				alert(uid);
+				var uid='';
 				for (var i = 0; i < pages.length; i++) {
 					addPage(pages[i], $(this),uid);
 				}
