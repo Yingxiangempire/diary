@@ -30,7 +30,6 @@ function loadApp() {
 	// Check if the CSS was already loaded
 	
 	if (flipbook.width()==0 || flipbook.height()==0) {
-		alert('ss');
 		setTimeout(loadApp, 10);
 		return;
 	}
@@ -38,7 +37,6 @@ function loadApp() {
 	// Mousewheel
 
 	$('#book-zoom').mousewheel(function(event, delta, deltaX, deltaY) {
-
 		var data = $(this).data(),
 			step = 30,
 			flipbook = $('.sj-book'),
@@ -152,8 +150,9 @@ function loadApp() {
 	// Flipbook
 
 	flipbook.bind(($.isTouch) ? 'touchend' : 'click', zoomHandle);
+	alert('qq');
 
-
+alert($(window).height());
 	flipbook.turn({
 		elevation: 50,
 		acceleration: !isChrome(),
@@ -226,7 +225,6 @@ function loadApp() {
 			},
 
 			start: function(e, pageObj) {
-		
 				moveBar(true);
 
 			},
@@ -248,7 +246,6 @@ function loadApp() {
 			},
 
 			missing: function (e, pages) {
-				alert(uid);
 				var uid='';
 				for (var i = 0; i < pages.length; i++) {
 					addPage(pages[i], $(this),uid);
