@@ -24,7 +24,6 @@
 
 
 <script type="text/javascript">
-alert('ss');
 function loadApp() {
 	var flipbook = $('.sj-book');
 
@@ -38,6 +37,7 @@ function loadApp() {
 	// Mousewheel
 
 	$('#book-zoom').mousewheel(function(event, delta, deltaX, deltaY) {
+		alert('ss');
 
 		var data = $(this).data(),
 			step = 30,
