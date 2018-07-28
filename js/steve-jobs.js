@@ -28,14 +28,19 @@ function updateDepth(book, newPage) {
 
 }
 
-function loadPage(page) {
-	$.ajax({url: 'pages/page' + page + '.html'}).
+function loadPage(page,uid) {
+	if(!uid){
+		var address='pages/page'+ page + '.html';
+	}else {
+		var address = 'pages/' + uid + '/page' + page + '.html';
+	}
+	$.ajax({url:address }).
 		done(function(pageHtml) {
 			$('.sj-book .p' + page).html(pageHtml.replace('samples/steve-jobs/', ''));
 		});
 }
 
-function addPage(page, book) {
+function addPage(page, book,uid) {
 
 	var id, pages = book.turn('pages');
 
@@ -43,12 +48,12 @@ function addPage(page, book) {
 
 		var element = $('<div />',
 			{'class': 'own-size',
-				css: {width: 460, height: 582}
+				css: {width: 460, height: 600}
 			}).
 			html('<div class="loader"></div>');
 
 		if (book.turn('addPage', element, page)) {
-			loadPage(page);
+			loadPage(page,uid);
 		}
 
 	}
@@ -190,7 +195,7 @@ function moveBar(yes) {
 function setPreview(view) {
 
 	var previewWidth = 115,
-		previewHeight = 73,
+		previewHeight = 68,
 		previewSrc = 'pages/preview.jpg',
 		preview = $(_thumbPreview.children(':first')),
 		numPages = (view==1 || view==$('#slider').slider('option', 'max')) ? 1 : 2,

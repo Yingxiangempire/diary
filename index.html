@@ -5,6 +5,7 @@
 <!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 <head>
+	<meta name="viewport" content="width=width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0">
 <script type="text/javascript" src="../../extras/jquery.min.1.7.js"></script>
 <script type="text/javascript" src="../../extras/jquery-ui-1.8.20.custom.min.js"></script>
 <script type="text/javascript" src="../../extras/jquery.mousewheel.min.js"></script>
@@ -152,6 +153,14 @@ function loadApp() {
 	// Flipbook
 
 	flipbook.bind(($.isTouch) ? 'touchend' : 'click', zoomHandle);
+	function GetUrlPara()
+	{
+		var url = document.location.toString();
+		var arrUrl = url.split("?");
+
+		var para = arrUrl[1];
+		return para;
+	}
 
 	flipbook.turn({
 		elevation: 50,
@@ -246,9 +255,9 @@ function loadApp() {
 			},
 
 			missing: function (e, pages) {
-
+                var uid=GetUrlPara();
 				for (var i = 0; i < pages.length; i++) {
-					addPage(pages[i], $(this));
+					addPage(pages[i], $(this),uid);
 				}
 
 			}
