@@ -1,269 +1,315 @@
 <!DOCTYPE html>
 <html>
-<meta charset="utf-8" />
+<meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="wap-font-scale" content="no">
 <meta name="format-detection" content="telephone=no">
 <title>映像日记</title>
 <head>
-<script type="text/javascript" src="../../extras/jquery.min.1.7.js"></script>
-<script type="text/javascript" src="../../extras/jquery-ui-1.8.20.custom.min.js"></script>
-<script type="text/javascript" src="../../extras/jquery.mousewheel.min.js"></script>
-<script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
-<script type="text/javascript" src="../../lib/hash.js"></script>
+    <script type="text/javascript" src="../../extras/jquery.min.1.7.js"></script>
+    <script type="text/javascript" src="../../extras/jquery-ui-1.8.20.custom.min.js"></script>
+    <script type="text/javascript" src="../../extras/jquery.mousewheel.min.js"></script>
+    <script type="text/javascript" src="../../extras/modernizr.2.5.3.min.js"></script>
+    <script type="text/javascript" src="../../lib/hash.js"></script>
+    <style type="text/css"> #header, #siderLeft, #siderRight {
+        padding: 10px;
+        margin: 6px;
+    }
+
+    #siderLeft {
+        float: left;
+        width: 60px;
+        height: 100px;
+    }
+
+    #siderRight {
+        float: left;
+        width: 406px;
+        height: 100px;
+    }
+
+    #footer {
+        position: fixed;
+        bottom: 0
+    }
+
+    .weather_left {
+        float: left
+    }
+
+    .date_right {
+        float: right
+    }
+
+    .book-content {
+        width: 100%;
+        height: 100%;
+        background-image: url("/pics/back_image.jpg");
+        background-repeat: repeat;
+        background-size: cover;
+    }
+    </style>
 </head>
 <body>
 
 <div id="canvas">
-	<div id="book-zoom">
-		<div class="sj-book">
+    <div id="book-zoom">
+        <div class="sj-book">
 
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
 
 
 <script type="text/javascript">
-function loadApp() {
-	var flipbook = $('.sj-book');
-	// Mousewheel
-	$('#book-zoom').mousewheel(function(event, delta, deltaX, deltaY) {
-		var data = $(this).data(),
-			step = 30,
-			flipbook = $('.sj-book'),
-			actualPos = $('#slider').slider('value')*step;
+    function loadApp() {
+        var flipbook = $('.sj-book');
+        // Mousewheel
+        $('#book-zoom').mousewheel(function (event, delta, deltaX, deltaY) {
+            var data = $(this).data(),
+                    step = 30,
+                    flipbook = $('.sj-book'),
+                    actualPos = $('#slider').slider('value') * step;
 
-		if (typeof(data.scrollX)==='undefined') {
-			data.scrollX = actualPos;
-			data.scrollPage = flipbook.turn('page');
-		}
+            if (typeof(data.scrollX) === 'undefined') {
+                data.scrollX = actualPos;
+                data.scrollPage = flipbook.turn('page');
+            }
 
-		data.scrollX = Math.min($( "#slider" ).slider('option', 'max')*step,
-			Math.max(0, data.scrollX + deltaX));
+            data.scrollX = Math.min($("#slider").slider('option', 'max') * step,
+                    Math.max(0, data.scrollX + deltaX));
 
-		var actualView = Math.round(data.scrollX/step),
-			page = Math.min(flipbook.turn('pages'), Math.max(1, actualView*2 - 2));
+            var actualView = Math.round(data.scrollX / step),
+                    page = Math.min(flipbook.turn('pages'), Math.max(1, actualView * 2 - 2));
 
-		if ($.inArray(data.scrollPage, flipbook.turn('view', page))==-1) {
-			data.scrollPage = page;
-			flipbook.turn('page', page);
-		}
+            if ($.inArray(data.scrollPage, flipbook.turn('view', page)) == -1) {
+                data.scrollPage = page;
+                flipbook.turn('page', page);
+            }
 
-		if (data.scrollTimer)
-			clearInterval(data.scrollTimer);
+            if (data.scrollTimer)
+                clearInterval(data.scrollTimer);
 
-		data.scrollTimer = setTimeout(function(){
-			data.scrollX = undefined;
-			data.scrollPage = undefined;
-			data.scrollTimer = undefined;
-		}, 1000);
+            data.scrollTimer = setTimeout(function () {
+                data.scrollX = undefined;
+                data.scrollPage = undefined;
+                data.scrollTimer = undefined;
+            }, 1000);
 
-	});
+        });
 
-	// Slider
+        // Slider
 
-	$( "#slider" ).slider({
-		min: 1,
-		max: 100,
+        $("#slider").slider({
+            min: 1,
+            max: 100,
 
-		start: function(event, ui) {
+            start: function (event, ui) {
 
-			if (!window._thumbPreview) {
-				_thumbPreview = $('<div />', {'class': 'thumbnail'}).html('<div></div>');
-				setPreview(ui.value);
-				_thumbPreview.appendTo($(ui.handle));
-			} else
-				setPreview(ui.value);
+                if (!window._thumbPreview) {
+                    _thumbPreview = $('<div />', {'class': 'thumbnail'}).html('<div></div>');
+                    setPreview(ui.value);
+                    _thumbPreview.appendTo($(ui.handle));
+                } else
+                    setPreview(ui.value);
 
-			moveBar(false);
+                moveBar(false);
 
-		},
+            },
 
-		slide: function(event, ui) {
+            slide: function (event, ui) {
 
-			setPreview(ui.value);
+                setPreview(ui.value);
 
-		},
+            },
 
-		stop: function() {
+            stop: function () {
 
-			if (window._thumbPreview)
-				_thumbPreview.removeClass('show');
+                if (window._thumbPreview)
+                    _thumbPreview.removeClass('show');
 
-			$('.sj-book').turn('page', Math.max(1, $(this).slider('value')*2 - 2));
+                $('.sj-book').turn('page', Math.max(1, $(this).slider('value') * 2 - 2));
 
-		}
-	});
+            }
+        });
 
 
-	// URIs
-	Hash.on('^page\/([0-9]*)$', {
-		yep: function(path, parts) {
+        // URIs
+        Hash.on('^page\/([0-9]*)$', {
+            yep: function (path, parts) {
 
-			var page = parts[1];
+                var page = parts[1];
 
-			if (page!==undefined) {
-				if ($('.sj-book').turn('is'))
-					$('.sj-book').turn('page', page);
-			}
+                if (page !== undefined) {
+                    if ($('.sj-book').turn('is'))
+                        $('.sj-book').turn('page', page);
+                }
 
-		},
-		nop: function(path) {
+            },
+            nop: function (path) {
 
-			if ($('.sj-book').turn('is'))
-				$('.sj-book').turn('page', 1);
-		}
-	});
+                if ($('.sj-book').turn('is'))
+                    $('.sj-book').turn('page', 1);
+            }
+        });
 
-	// Arrows
+        // Arrows
 
-	$(document).keydown(function(e){
+        $(document).keydown(function (e) {
 
-		var previous = 37, next = 39;
+            var previous = 37, next = 39;
 
-		switch (e.keyCode) {
-			case previous:
+            switch (e.keyCode) {
+                case previous:
 
-				$('.sj-book').turn('previous');
+                    $('.sj-book').turn('previous');
 
-			break;
-			case next:
+                    break;
+                case next:
 
-				$('.sj-book').turn('next');
+                    $('.sj-book').turn('next');
 
-			break;
-		}
+                    break;
+            }
 
-	});
+        });
 
 
-	// Flipbook
-	flipbook.bind(($.isTouch) ? 'touchend' : 'click', zoomHandle);
-	flipbook.turn({
-		elevation: 50,
-		acceleration: !isChrome(),
-		autoCenter: true,
-		gradients: true,
-		duration: 1000,
-		pages: 112,
-		height: $(window).height()-20,
-		display:'single',
-		when: {
-			turning: function(e, page, view) {
+        // Flipbook
+        flipbook.bind(($.isTouch) ? 'touchend' : 'click', zoomHandle);
+        function GetUrlPara() {
+            var url = document.location.toString();
+            var arrUrl = url.split("?");
 
-				var book = $(this),
-					currentPage = book.turn('page'),
-					pages = book.turn('pages');
+            var para = arrUrl[1];
+            return para;
+        }
 
-				if (currentPage>3 && currentPage<pages-3) {
+        flipbook.turn({
+            elevation: 50,
+            acceleration: !isChrome(),
+            autoCenter: true,
+            gradients: true,
+            duration: 1000,
+            pages: 112,
+            height: $(window).height() - 20,
+            display: 'single',
+            when: {
+                turning: function (e, page, view) {
 
-					if (page==1) {
-						book.turn('page', 2).turn('stop').turn('page', page);
-						e.preventDefault();
-						return;
-					} else if (page==pages) {
-						book.turn('page', pages-1).turn('stop').turn('page', page);
-						e.preventDefault();
-						return;
-					}
-				} else if (page>3 && page<pages-3) {
-					if (currentPage==1) {
-						book.turn('page', 2).turn('stop').turn('page', page);
-						e.preventDefault();
-						return;
-					} else if (currentPage==pages) {
-						book.turn('page', pages-1).turn('stop').turn('page', page);
-						e.preventDefault();
-						return;
-					}
-				}
+                    var book = $(this),
+                            currentPage = book.turn('page'),
+                            pages = book.turn('pages');
 
-				updateDepth(book, page);
+                    if (currentPage > 3 && currentPage < pages - 3) {
 
-				if (page>=2)
-					$('.sj-book .p2').addClass('fixed');
-				else
-					$('.sj-book .p2').removeClass('fixed');
+                        if (page == 1) {
+                            book.turn('page', 2).turn('stop').turn('page', page);
+                            e.preventDefault();
+                            return;
+                        } else if (page == pages) {
+                            book.turn('page', pages - 1).turn('stop').turn('page', page);
+                            e.preventDefault();
+                            return;
+                        }
+                    } else if (page > 3 && page < pages - 3) {
+                        if (currentPage == 1) {
+                            book.turn('page', 2).turn('stop').turn('page', page);
+                            e.preventDefault();
+                            return;
+                        } else if (currentPage == pages) {
+                            book.turn('page', pages - 1).turn('stop').turn('page', page);
+                            e.preventDefault();
+                            return;
+                        }
+                    }
 
-				if (page<book.turn('pages'))
-					$('.sj-book .p111').addClass('fixed');
-				else
-					$('.sj-book .p111').removeClass('fixed');
+                    updateDepth(book, page);
 
-				Hash.go('page/'+page).update();
+                    if (page >= 2)
+                        $('.sj-book .p2').addClass('fixed');
+                    else
+                        $('.sj-book .p2').removeClass('fixed');
 
-			},
+                    if (page < book.turn('pages'))
+                        $('.sj-book .p111').addClass('fixed');
+                    else
+                        $('.sj-book .p111').removeClass('fixed');
 
-			turned: function(e, page, view) {
+                    Hash.go('page/' + page).update();
 
-				var book = $(this);
+                },
 
-				if (page==2 || page==3) {
-					book.turn('peel', 'br');
-				}
+                turned: function (e, page, view) {
 
-				updateDepth(book);
+                    var book = $(this);
 
-				$('#slider').slider('value', getViewNumber(book, page));
+                    if (page == 2 || page == 3) {
+                        book.turn('peel', 'br');
+                    }
 
-				book.turn('center');
+                    updateDepth(book);
 
-			},
+                    $('#slider').slider('value', getViewNumber(book, page));
 
-			start: function(e, pageObj) {
-				moveBar(true);
+                    book.turn('center');
 
-			},
+                },
 
-			end: function(e, pageObj) {
+                start: function (e, pageObj) {
+                    moveBar(true);
 
-				var book = $(this);
+                },
 
-				updateDepth(book);
+                end: function (e, pageObj) {
 
-				setTimeout(function() {
+                    var book = $(this);
 
-					$('#slider').slider('value', getViewNumber(book));
+                    updateDepth(book);
 
-				}, 1);
+                    setTimeout(function () {
 
-				moveBar(false);
+                        $('#slider').slider('value', getViewNumber(book));
 
-			},
+                    }, 1);
 
-			missing: function (e, pages) {
-				var uid='';
-				for (var i = 0; i < pages.length; i++) {
-					addPage(pages[i], $(this),uid);
-				}
+                    moveBar(false);
 
-			}
-		}
-	});
+                },
 
+                missing: function (e, pages) {
+                    var uid = GetUrlPara();
+                    for (var i = 0; i < pages.length; i++) {
+                        addPage(pages[i], $(this), uid);
+                    }
 
-	$('#slider').slider('option', 'max', numberOfViews(flipbook));
+                }
+            }
+        });
 
-	flipbook.addClass('animated');
 
-	// Show canvas
+        $('#slider').slider('option', 'max', numberOfViews(flipbook));
 
-	$('#canvas').css({visibility: ''});
-}
+        flipbook.addClass('animated');
 
-// Hide canvas
+        // Show canvas
 
-$('#canvas').css({visibility: 'hidden'});
+        $('#canvas').css({visibility: ''});
+    }
 
-// Load turn.js
+    // Hide canvas
 
-yepnope({
-	test : Modernizr.csstransforms,
-	yep: ['../../lib/turn.min.js'],
-	nope: ['../../lib/turn.html4.min.js', 'css/jquery.ui.html4.css', 'css/steve-jobs-html4.css'],
-	both: ['js/steve-jobs.js', 'css/jquery.ui.css', 'css/steve-jobs.css'],
-	complete: loadApp
-});
+    $('#canvas').css({visibility: 'hidden'});
+
+    // Load turn.js
+
+    yepnope({
+        test: Modernizr.csstransforms,
+        yep: ['../../lib/turn.min.js'],
+        nope: ['../../lib/turn.html4.min.js', 'css/jquery.ui.html4.css', 'css/steve-jobs-html4.css'],
+        both: ['js/steve-jobs.js', 'css/jquery.ui.css', 'css/steve-jobs.css'],
+        complete: loadApp
+    });
 
 </script>
 
