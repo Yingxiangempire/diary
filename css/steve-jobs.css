@@ -61,13 +61,13 @@ body, ul, table, form{
 
 .sj-book .book-content{
 	font-family: "Stempel-Garamond-W01-Roman";
-	font-size:16px;
-	margin:0px 20px;
+	font-size:26px;
+	margin:0px 0px;
 }
 
 .sj-book blockquote{
 	color:#586078;
-	margin:10px 0;
+	margin:0px 0;
 	font-style:italic;
 }
 
@@ -104,7 +104,7 @@ body, ul, table, form{
 
 .sj-book .book-content p{
 	text-indent: 18px;
-	margin: 20px 0;
+	margin: 0px 0;
 	line-height: 22px;
 }
 
