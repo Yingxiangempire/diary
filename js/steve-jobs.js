@@ -32,7 +32,7 @@ function loadPage(page,uid) {
 	if(!uid){
 		var address='pages/page'+ page + '.html';
 	}else {
-		var address = 'pages/' + uid + '/' + page + '.html';
+		var address = 'page/' + uid + '/' + page + '.html';
 	}
 	$.ajax({url:address }).
 		done(function(pageHtml) {
