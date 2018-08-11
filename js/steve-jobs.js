@@ -29,6 +29,8 @@ function updateDepth(book, newPage) {
 }
 
 function loadPage(page,uid) {
+	alert(uid);
+
 	if(!uid){
 		var address='pages/page'+ page + '.html';
 	}else {
@@ -175,7 +177,7 @@ function zoomOut() {
 	moveBar(true);
 
 	$('.zoom-pic').remove();
-	$('#book-zoom').transform('scale(1, 1)');
+	$('#book-zoom').transform('scale(7, 7)');
 	$('.samples .bar').css({visibility: 'visible'});
 	$('#slider-bar').show();
 
