@@ -29,8 +29,6 @@ function updateDepth(book, newPage) {
 }
 
 function loadPage(page,uid) {
-	alert(uid);
-
 	if(!uid){
 		var address='pages/page'+ page + '.html';
 	}else {
